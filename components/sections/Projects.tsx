@@ -16,8 +16,6 @@ import {
   Printer,
   Briefcase,
   Menu,
-  Grid,
-  List,
 } from "lucide-react";
 
 // Define TypeScript interfaces
@@ -185,11 +183,15 @@ export default function Projects() {
   const openProjectModal = (project: Project): void => {
     setSelectedProject(project);
     setIsModalOpen(true);
+    // Prevent body scrolling when modal is open
+    document.body.style.overflow = "hidden";
   };
 
   const closeProjectModal = (): void => {
     setIsModalOpen(false);
     setSelectedProject(null);
+    // Restore body scrolling
+    document.body.style.overflow = "unset";
   };
 
   // Get category color
@@ -418,7 +420,7 @@ export default function Projects() {
         )}
       </div>
 
-      {/* Project Modal - Mobile Optimized */}
+      {/* Project Modal - Enhanced Mobile First */}
       <AnimatePresence>
         {isModalOpen && selectedProject && (
           <motion.div
@@ -432,115 +434,166 @@ export default function Projects() {
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
-              className="relative w-full sm:max-w-2xl lg:max-w-4xl bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] sm:max-h-[85vh] overflow-y-auto"
+              className="relative w-full sm:max-w-2xl lg:max-w-4xl bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl max-h-[92vh] sm:max-h-[90vh] overflow-hidden flex flex-col"
             >
+              {/* Drag Handle for Mobile - Visual indicator that you can swipe down */}
+              <div className="sm:hidden w-full flex justify-center pt-2 pb-1">
+                <div className="w-12 h-1 bg-gray-300 dark:bg-gray-600 rounded-full" />
+              </div>
+
               {/* Close Button - Mobile Optimized */}
               <button
                 onClick={closeProjectModal}
-                className="absolute top-3 right-3 z-10 p-2 bg-white/90 dark:bg-gray-900/90 hover:bg-white dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 rounded-full transition-colors"
+                className="absolute top-3 right-3 z-20 p-2.5 bg-white/90 dark:bg-gray-900/90 hover:bg-white dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 rounded-full transition-colors shadow-md backdrop-blur-sm"
+                aria-label="Close modal"
               >
                 <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
-              {/* Image */}
-              <div className="relative h-[30vh] sm:h-[45vh] lg:h-[50vh] bg-gray-50 dark:bg-gray-800">
-                <Image
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  fill
-                  className="object-contain"
-                />
-              </div>
+              {/* Scrollable Content Container */}
+              <div className="flex-1 overflow-y-auto overscroll-contain">
+                {/* Image Section */}
+                <div className="relative w-full h-[35vh] sm:h-[45vh] lg:h-[50vh] bg-gray-100 dark:bg-gray-800">
+                  <Image
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
+                    priority
+                  />
 
-              {/* Content - Mobile Optimized */}
-              <div className="p-5 sm:p-6 lg:p-8 space-y-4 sm:space-y-5 lg:space-y-6">
-                {/* Header */}
-                <div className="space-y-1 sm:space-y-2">
-                  <span
-                    className={`inline-block text-[10px] sm:text-xs uppercase tracking-wider ${getCategoryColor(selectedProject.category)} px-2 py-0.5 rounded`}
-                  >
-                    {selectedProject.category}
-                  </span>
-                  <h2 className="text-lg sm:text-xl lg:text-2xl font-light text-gray-900 dark:text-white">
-                    {selectedProject.title}
-                  </h2>
-                </div>
-
-                {/* Description */}
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {selectedProject.description ||
-                    "A carefully crafted project that demonstrates creative expertise and attention to detail."}
-                </p>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {selectedProject.tags.map((tag: string) => (
+                  {/* Category Badge - Moved inside image for mobile */}
+                  <div className="absolute top-3 left-3 sm:hidden">
                     <span
-                      key={tag}
-                      className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 px-2 py-0.5 rounded"
+                      className={`inline-block text-[10px] font-medium uppercase tracking-wider ${getCategoryColor(selectedProject.category)} px-3 py-1 rounded-full shadow-sm`}
                     >
-                      #{tag}
+                      {selectedProject.category}
                     </span>
-                  ))}
+                  </div>
                 </div>
 
-                {/* Video Links - Mobile Optimized */}
-                {selectedProject.category === "video" &&
-                  selectedProject.videoLinks && (
-                    <div className="space-y-2 sm:space-y-3 pt-3 sm:pt-4 border-t border-gray-100 dark:border-gray-800">
-                      <p className="text-[10px] sm:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                        Watch on
-                      </p>
-                      <div className="flex flex-wrap gap-3 sm:gap-4">
-                        {selectedProject.videoLinks.youtube && (
-                          <a
-                            href={selectedProject.videoLinks.youtube}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Youtube className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                            <span>YouTube</span>
-                            <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                          </a>
-                        )}
-                        {selectedProject.videoLinks.instagram && (
-                          <a
-                            href={selectedProject.videoLinks.instagram}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Instagram className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                            <span>Instagram</span>
-                            <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                          </a>
-                        )}
-                        {selectedProject.videoLinks.tiktok && (
-                          <a
-                            href={selectedProject.videoLinks.tiktok}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Video className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                            <span>TikTok</span>
-                            <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                          </a>
-                        )}
-                      </div>
+                {/* Content Section */}
+                <div className="p-5 sm:p-6 lg:p-8 space-y-4 sm:space-y-5 lg:space-y-6">
+                  {/* Header - Hidden category on mobile since it's in image */}
+                  <div className="space-y-1 sm:space-y-2">
+                    <span
+                      className={`hidden sm:inline-block text-xs uppercase tracking-wider ${getCategoryColor(selectedProject.category)} px-2 py-0.5 rounded`}
+                    >
+                      {selectedProject.category}
+                    </span>
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-light text-gray-900 dark:text-white pr-8">
+                      {selectedProject.title}
+                    </h2>
+                  </div>
+
+                  {/* Description */}
+                  <div className="space-y-2">
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {selectedProject.description ||
+                        "A carefully crafted project that demonstrates creative expertise and attention to detail."}
+                    </p>
+                  </div>
+
+                  {/* Tags - Horizontal scroll on mobile */}
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Tags
+                    </h4>
+                    <div className="flex flex-nowrap sm:flex-wrap gap-1.5 sm:gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-hide">
+                      {selectedProject.tags.map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="flex-shrink-0 text-xs sm:text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
                     </div>
-                  )}
+                  </div>
+
+                  {/* Video Links - Mobile Optimized */}
+                  {selectedProject.category === "video" &&
+                    selectedProject.videoLinks && (
+                      <div className="space-y-3 pt-2 sm:pt-4 border-t border-gray-100 dark:border-gray-800">
+                        <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          Watch on
+                        </h4>
+                        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3">
+                          {selectedProject.videoLinks.youtube && (
+                            <a
+                              href={selectedProject.videoLinks.youtube}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center sm:justify-start gap-2 px-3 py-2.5 sm:px-4 sm:py-2 bg-red-50 dark:bg-red-900/20 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Youtube className="w-4 h-4 sm:w-5 sm:h-5" />
+                              <span className="text-xs sm:text-sm font-medium">
+                                YouTube
+                              </span>
+                              <ExternalLink className="w-3 h-3 ml-auto sm:ml-1 opacity-70" />
+                            </a>
+                          )}
+                          {selectedProject.videoLinks.instagram && (
+                            <a
+                              href={selectedProject.videoLinks.instagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center sm:justify-start gap-2 px-3 py-2.5 sm:px-4 sm:py-2 bg-pink-50 dark:bg-pink-900/20 rounded-lg text-pink-600 dark:text-pink-400 hover:bg-pink-100 dark:hover:bg-pink-900/40 transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />
+                              <span className="text-xs sm:text-sm font-medium">
+                                Instagram
+                              </span>
+                              <ExternalLink className="w-3 h-3 ml-auto sm:ml-1 opacity-70" />
+                            </a>
+                          )}
+                          {selectedProject.videoLinks.tiktok && (
+                            <a
+                              href={selectedProject.videoLinks.tiktok}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center sm:justify-start gap-2 px-3 py-2.5 sm:px-4 sm:py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Video className="w-4 h-4 sm:w-5 sm:h-5" />
+                              <span className="text-xs sm:text-sm font-medium">
+                                TikTok
+                              </span>
+                              <ExternalLink className="w-3 h-3 ml-auto sm:ml-1 opacity-70" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                  {/* Project Meta - Optional additional info */}
+                  <div className="pt-2 text-center sm:text-left">
+                    <p className="text-xs text-gray-400 dark:text-gray-500">
+                      Click outside or swipe down to close
+                    </p>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Styles for scrollbar hiding */}
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 }
