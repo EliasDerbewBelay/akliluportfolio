@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Josefin_Sans } from "next/font/google";
 import { Button } from "@/components/ui/button";
@@ -18,10 +18,10 @@ export default function ProfilePage() {
     >
       {/* Light Mode Background */}
       <div className="fixed inset-0 -z-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:opacity-0" />
-      
+
       {/* Dark Mode Background */}
       <div className="fixed inset-0 -z-20 opacity-0 dark:opacity-100 bg-gradient-to-br from-[#0B1120] via-[#0F1A2F] to-[#1A1F35]" />
-      
+
       {/* Animated gradient orbs for dark mode */}
       <div className="fixed inset-0 -z-10 opacity-0 dark:opacity-100 overflow-hidden">
         <div className="absolute top-0 -left-40 w-80 h-80 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
@@ -58,7 +58,7 @@ export default function ProfilePage() {
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 dark:text-white">
                 Aklilu Derbew
               </h1>
-              
+
               <Badge
                 variant="secondary"
                 className="px-4 py-2 text-sm sm:text-base bg-blue-600 hover:bg-purple-600 text-white border-0 transition-colors duration-300 cursor-default"
@@ -74,7 +74,10 @@ export default function ProfilePage() {
                 Jornalistaklilu@gmail.com
               </span>
               <span className="flex items-center gap-2">
-                <MapPin size={16} className="text-purple-600 dark:text-purple-400" />
+                <MapPin
+                  size={16}
+                  className="text-purple-600 dark:text-purple-400"
+                />
                 Addis Ababa, Ethiopia
               </span>
               <span className="flex items-center gap-2">
@@ -85,7 +88,7 @@ export default function ProfilePage() {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-              <Button 
+              <Button
                 size="lg"
                 className="bg-blue-600 hover:bg-purple-600 text-white px-8 py-6 rounded-xl transition-all duration-300"
               >
@@ -94,8 +97,8 @@ export default function ProfilePage() {
                   Get in Touch
                 </span>
               </Button>
-              
-              <Button 
+
+              <Button
                 size="lg"
                 variant="outline"
                 className="border-2 border-blue-600 dark:border-blue-400 text-blue-700 dark:text-blue-300 hover:bg-blue-600 hover:text-white dark:hover:text-white px-8 py-6 rounded-xl transition-all duration-300"
@@ -112,10 +115,18 @@ export default function ProfilePage() {
 
       <style jsx>{`
         @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-          100% { transform: translate(0px, 0px) scale(1); }
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
         }
         .animate-blob {
           animation: blob 7s infinite;

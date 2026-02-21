@@ -6,6 +6,7 @@ import Image from "next/image";
 import logo from "../../public/logo.png";
 import { Josefin_Sans } from "next/font/google";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -20,6 +21,13 @@ export default function Navbar() {
   };
 
   const navItems = ["Home", "Projects", "Certificates", "Contact Me"];
+
+  const getHref = (item) => {
+    if (item === "Home") {
+      return "/";
+    }
+    return `/${item.toLowerCase().replace(" ", "-")}`;
+  };
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-gray-900/70 border-b border-gray-200 dark:border-gray-800 shadow-sm">
@@ -46,14 +54,14 @@ export default function Navbar() {
             >
               {navItems.map((item) => (
                 <li key={item} className="relative group">
-                  <a
-                    href={`#${item.toLowerCase().replace(" ", "-")}`}
+                  <Link
+                    href={getHref(item)}
                     className="cursor-pointer px-2 py-1 inline-block transition-all duration-300 hover:text-blue-600 dark:hover:text-blue-400"
                   >
                     {item}
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300 ease-out"></span>
                     <span className="absolute inset-0 bg-blue-50 dark:bg-blue-900/20 rounded-md scale-0 group-hover:scale-100 transition-transform duration-300 -z-10"></span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -107,7 +115,7 @@ export default function Navbar() {
                 }`}
               >
                 <a
-                  href={`#${item.toLowerCase().replace(" ", "-")}`}
+                  href={getHref(item)}
                   className="block py-3 px-4 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300"
                   onClick={() => setIsMenuOpen(false)}
                 >

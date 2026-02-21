@@ -1,7 +1,9 @@
 import Hero from "@/components/sections/Hero";
 import AboutMe from "@/components/sections/AboutMe";
 import Tools from "@/components/sections/Tools";
+
 import { Separator } from "@/components/ui/separator";
+
 
 export default function Home() {
   return (
