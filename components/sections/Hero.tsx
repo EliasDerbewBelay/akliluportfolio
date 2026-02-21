@@ -1,137 +1,350 @@
 "use client";
 
-import { Josefin_Sans } from "next/font/google";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Mail, MapPin, Phone, Download, MessageCircle } from "lucide-react";
 import Image from "next/image";
+import {
+  FaInstagram,
+  FaLinkedinIn,
+  FaTelegram,
+  FaTiktok,
+  FaYoutube,
+} from "react-icons/fa";
+import {
+  MdPalette,
+  MdBrush,
+  MdDesignServices,
+  MdAnimation,
+  MdVideocam,
+  MdCamera,
+} from "react-icons/md";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
-const josefin = Josefin_Sans({
-  subsets: ["latin"],
-  variable: "--font-josefin",
-});
+const HeroSection = () => {
+  const [mounted, setMounted] = useState(false);
 
-export default function ProfilePage() {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   // Function to handle CV download
   const handleDownloadCV = () => {
-    // Create a link element
     const link = document.createElement("a");
-    link.href = "/cv/aklilu-resume.pdf"; // Path to your CV file
-    link.download = "Aklilu_Derbew_Resume.pdf"; // Name for the downloaded file
+    link.href = "/cv/aklilu-resume.pdf";
+    link.download = "Aklilu_Derbew_Resume.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
+  // Design icons - Full set for desktop, minimal for mobile
+  const designIcons = [
+    {
+      Icon: MdPalette,
+      color: "#3B82F6",
+      delay: 0,
+      position: "top-0 left-0",
+      desktopPos: "lg:top-0 lg:left-0",
+      rotate: 0,
+    },
+    {
+      Icon: MdBrush,
+      color: "#1E3A8A",
+      delay: 0.2,
+      position: "top-10 -right-5",
+      desktopPos: "lg:top-10 lg:-right-5",
+      rotate: 15,
+    },
+    {
+      Icon: MdDesignServices,
+      color: "#2563EB",
+      delay: 0.4,
+      position: "-bottom-5 left-10",
+      desktopPos: "lg:-bottom-5 lg:left-10",
+      rotate: -10,
+    },
+    {
+      Icon: MdAnimation,
+      color: "#1E40AF",
+      delay: 0.6,
+      position: "bottom-10 -right-5",
+      desktopPos: "lg:bottom-10 lg:-right-5",
+      rotate: 5,
+    },
+    {
+      Icon: MdVideocam,
+      color: "#3B82F6",
+      delay: 0.8,
+      position: "-top-5 right-10",
+      desktopPos: "lg:-top-5 lg:right-10",
+      rotate: -5,
+    },
+    {
+      Icon: MdCamera,
+      color: "#1E3A8A",
+      delay: 1,
+      position: "bottom-0 left-0",
+      desktopPos: "lg:bottom-0 lg:left-0",
+      rotate: 10,
+    },
+  ];
+
   return (
-    <main
-      className={`${josefin.variable} font-josefin min-h-screen transition-colors duration-300`}
-    >
-      {/* Light Mode Background */}
-      <div className="fixed inset-0 -z-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:opacity-0" />
-
-      {/* Dark Mode Background */}
-      <div className="fixed inset-0 -z-20 opacity-0 dark:opacity-100 bg-gradient-to-br from-[#0B1120] via-[#0F1A2F] to-[#1A1F35]" />
-
-      {/* Animated gradient orbs for dark mode */}
-      <div className="fixed inset-0 -z-10 opacity-0 dark:opacity-100 overflow-hidden">
-        <div className="absolute top-0 -left-40 w-80 h-80 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-        <div className="absolute top-0 -right-40 w-80 h-80 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-40 left-20 w-80 h-80 bg-indigo-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+    <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950 flex flex-col items-center overflow-hidden">
+      {/* Animated gradient orbs for dark mode - Desktop only */}
+      <div className="absolute inset-0 -z-10 opacity-0 dark:opacity-100 overflow-hidden hidden lg:block">
+        <div className="absolute top-0 -left-40 w-80 h-80 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+        <div className="absolute top-0 -right-40 w-80 h-80 bg-indigo-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute -bottom-40 left-20 w-80 h-80 bg-blue-800/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
       </div>
 
-      {/* Light mode decorative elements */}
-      <div className="fixed inset-0 -z-10 dark:opacity-0">
+      {/* Light mode decorative elements - Desktop only */}
+      <div className="absolute inset-0 -z-10 dark:opacity-0 hidden lg:block">
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-72 h-72 bg-indigo-200/30 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Hero Section */}
-        <section className="relative py-12 px-4 sm:px-6 text-center">
-          <div className="max-w-4xl mx-auto space-y-8">
-            {/* Clean Profile Image */}
-            <div className="relative inline-block">
-              <div className="w-38 h-58 rounded-full overflow-hidden mx-auto border-4 border-blue-600 dark:border-blue-400">
-                <Image
-                  src="/hero-image.png"
-                  width={126}
-                  height={126}
-                  alt="Aklilu Derbew"
-                  className="object-cover w-full h-full"
-                  priority
-                />
-              </div>
+      {/* MOBILE LAYOUT - visible only on mobile */}
+      <div className="lg:hidden w-full px-6 pt-16 pb-8 flex flex-col items-center gap-8">
+        {/* Name */}
+        <div className="text-center">
+          <h2 className="text-sm font-bold text-gray-600 dark:text-gray-400">
+            Hy! I Am
+          </h2>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+            Aklilu Derbew.
+          </h1>
+        </div>
+
+        {/* Tagline */}
+        <p className="text-gray-600 dark:text-gray-400 text-sm italic text-center max-w-xs">
+          I design beautifully simple things, and I love what I do.
+        </p>
+
+        {/* Profile Image with minimal icons */}
+        <div className="relative my-2">
+          <div className="relative inline-block">
+            <div className="absolute inset-0 rounded-full bg-blue-500/20 dark:bg-blue-400/20 blur-xl animate-pulse -z-10" />
+
+            <div className="relative w-36 h-36 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
+              <Image
+                src="/hero-image.png"
+                alt="Aklilu Derbew"
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
 
-            {/* Name and Title */}
-            <div className="space-y-3">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 dark:text-white">
-                Aklilu Derbew
-              </h1>
-
-              <Badge
-                variant="secondary"
-                className="px-4 py-2 text-sm sm:text-base bg-blue-600 hover:bg-purple-600 text-white border-0 transition-colors duration-300 cursor-default"
-              >
-                Graphics Designer & Visual Artist
-              </Badge>
-            </div>
-
-            {/* Contact Info */}
-            <div className="flex flex-wrap justify-center gap-6 text-slate-600 dark:text-slate-400">
-              <span className="flex items-center gap-2">
-                <Mail size={16} className="text-blue-600 dark:text-blue-400" />
-                Jornalistaklilu@gmail.com
-              </span>
-              <span className="flex items-center gap-2">
-                <MapPin
-                  size={16}
-                  className="text-purple-600 dark:text-purple-400"
-                />
-                Addis Ababa, Ethiopia
-              </span>
-              <span className="flex items-center gap-2">
-                <Phone size={16} className="text-pink-600 dark:text-pink-400" />
-                +251 99 383 4681
-              </span>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-              <Link href="/contact-me" className="w-full sm:w-auto">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto bg-blue-600 hover:bg-purple-600 text-white px-8 py-6 rounded-xl transition-all duration-300"
+            {/* Only 4 icons on mobile, positioned closer */}
+            {designIcons
+              .slice(0, 4)
+              .map(({ Icon, color, delay, position }, index) => (
+                <motion.div
+                  key={index}
+                  className={`absolute ${position.replace("lg:", "")}`}
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    y: [0, -5, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    delay,
+                    repeat: Infinity,
+                  }}
                 >
-                  <span className="flex items-center gap-2 justify-center">
-                    <MessageCircle className="w-5 h-5" />
-                    Get in Touch
-                  </span>
-                </Button>
+                  <div
+                    className="w-7 h-7 rounded-full bg-white dark:bg-gray-800 shadow-md flex items-center justify-center"
+                    style={{ color }}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                  </div>
+                </motion.div>
+              ))}
+          </div>
+        </div>
+
+        {/* Bottom Section - Full width buttons */}
+        <div className="w-full space-y-6 mt-4">
+          {/* Experience & Social */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                01
+              </span>
+              <span className="text-[8px] uppercase tracking-wider text-gray-500 leading-tight">
+                Years
+                <br />
+                Experience
+              </span>
+            </div>
+
+            <div className="flex gap-3 text-gray-600 dark:text-gray-400">
+              <Link href="https://t.me/aki_project">
+                <FaTelegram className="w-4 h-4 cursor-pointer hover:text-blue-500 transition-colors" />
+              </Link>
+              <Link href="https://tiktok.com/@akiproject7">
+                <FaTiktok className="w-4 h-4 cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors" />
+              </Link>
+              <Link href="#">
+                <FaYoutube className="w-4 h-4 cursor-pointer hover:text-red-600 transition-colors" />
               </Link>
 
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={handleDownloadCV}
-                className="w-full sm:w-auto border-2 border-blue-600 dark:border-blue-400 text-blue-700 dark:text-blue-300 hover:bg-blue-600 hover:text-white dark:hover:text-white px-8 py-6 rounded-xl transition-all duration-300 cursor-pointer"
-              >
-                <span className="flex items-center gap-2 justify-center">
-                  <Download className="w-5 h-5" />
-                  Download Resume
-                </span>
-              </Button>
+              <Link href="https://www.instagram.com/aki.project7">
+                <FaInstagram className="w-4 h-4 cursor-pointer hover:text-pink-600 transition-colors" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Job Title */}
+          <h3 className="text-base font-bold text-gray-800 dark:text-gray-200 text-center">
+            Creative{" "}
+            <span className="text-blue-600 dark:text-blue-400">Designer.</span>
+          </h3>
+
+          {/* Buttons - Full width and professional */}
+          <div className="flex flex-col gap-3 w-full">
+            <Link href="/contact-me" className="w-full">
+              <button className="w-full px-4 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl text-sm transition-all duration-300 shadow-md">
+                Get in Touch
+              </button>
+            </Link>
+
+            <button
+              onClick={handleDownloadCV}
+              className="w-full px-4 py-3.5 border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:text-white font-medium rounded-xl text-sm transition-all duration-300"
+            >
+              Download CV
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* DESKTOP LAYOUT - visible only on desktop */}
+      <div className="hidden lg:block relative w-full h-screen">
+        {/* Top Left: Name and Intro */}
+        <div className="absolute top-20 left-20 max-w-none">
+          <h2 className="text-3xl font-bold text-gray-700 dark:text-gray-300 mb-2">
+            Hy! I Am
+          </h2>
+          <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent leading-tight">
+            Aklilu Derbew.
+          </h1>
+        </div>
+
+        {/* Top Right: Tagline */}
+        <div className="absolute top-20 right-20 max-w-[200px] text-right">
+          <p className="text-gray-600 dark:text-gray-400 text-base italic">
+            I design beautifully simple things, and I love what I do.
+          </p>
+        </div>
+
+        {/* Center: Main Image with all icons */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="relative inline-block">
+            <div className="absolute inset-0 rounded-full bg-blue-500/20 dark:bg-blue-400/20 blur-xl animate-pulse -z-10" />
+
+            <div className="relative w-80 h-80 rounded-full overflow-hidden border-8 border-white dark:border-gray-800 shadow-2xl ring-4 ring-blue-600/20 dark:ring-blue-400/20">
+              <Image
+                src="/hero-image.png"
+                alt="Aklilu Derbew"
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
 
-            {/* Optional: Add a small note about CV format */}
-            <p className="text-xs text-gray-400 dark:text-gray-500 mt-4">
-              Download my resume (PDF format)
-            </p>
+            {/* All 6 icons with full animation */}
+            {designIcons.map(
+              ({ Icon, color, delay, desktopPos, rotate }, index) => (
+                <motion.div
+                  key={index}
+                  className={`absolute ${desktopPos} z-20`}
+                  initial={{ scale: 0, rotate: 0 }}
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    rotate: [rotate, rotate + 10, rotate],
+                    y: [0, -10, 0],
+                  }}
+                  transition={{
+                    duration: 4,
+                    delay,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                >
+                  <div
+                    className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-lg flex items-center justify-center"
+                    style={{ color }}
+                  >
+                    <Icon className="w-6 h-6" />
+                  </div>
+                </motion.div>
+              ),
+            )}
           </div>
-        </section>
+        </div>
+
+        {/* Bottom Left: Experience & Socials - Updated icons */}
+        <div className="absolute bottom-20 left-20">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-5xl font-bold text-blue-600 dark:text-blue-400">
+              01
+            </span>
+            <span className="text-xs uppercase tracking-widest text-gray-500 leading-tight">
+              Years
+              <br />
+              Experience
+            </span>
+          </div>
+
+          <div className="flex gap-6 text-gray-600 dark:text-gray-400">
+            <Link href="https://t.me/aki_project">
+              <FaTelegram className="w-5 h-5 cursor-pointer hover:text-blue-500 transition-colors" />
+            </Link>
+            <Link href="https://www.tiktok.com/@akiproject7">
+              <FaTiktok className="w-5 h-5 cursor-pointer hover:text-gray-900 dark:hover:text-white transition-colors" />
+            </Link>
+            <Link href="https://www.youtube.com/@aki_project7">
+              <FaYoutube className="w-5 h-5 cursor-pointer hover:text-red-600 transition-colors" />
+            </Link>
+            <Link href="https://www.instagram.com/aki.project7">
+              <FaInstagram className="w-5 h-5 cursor-pointer hover:text-pink-600 transition-colors" />
+            </Link>
+            <Link href="https://www.linkedin.com/in/aklilu-derbew">
+              <FaLinkedinIn className="w-5 h-5 cursor-pointer hover:text-blue-700 transition-colors" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Bottom Right: Job Title & Buttons */}
+        <div className="absolute bottom-20 right-20 text-right">
+          <h3 className="text-4xl font-bold text-gray-800 dark:text-gray-200 italic mb-6">
+            Creative <br />{" "}
+            <span className="text-blue-600 dark:text-blue-400">Designer.</span>
+          </h3>
+
+          <div className="flex gap-4 justify-end">
+            <Link href="/contact-me">
+              <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-base transition-all duration-300 transform hover:scale-105 shadow-md">
+                Get in Touch
+              </button>
+            </Link>
+
+            <button
+              onClick={handleDownloadCV}
+              className="px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:text-white font-medium rounded-lg text-base transition-all duration-300 transform hover:scale-105"
+            >
+              Download CV
+            </button>
+          </div>
+        </div>
       </div>
+
+      {/* Subtle overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/5 dark:to-black/10 pointer-events-none" />
 
       <style jsx>{`
         @keyframes blob {
@@ -158,6 +371,8 @@ export default function ProfilePage() {
           animation-delay: 4s;
         }
       `}</style>
-    </main>
+    </section>
   );
-}
+};
+
+export default HeroSection;

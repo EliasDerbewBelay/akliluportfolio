@@ -23,9 +23,9 @@ const availableIcons = {
   Blender: "/icons/blender-svgrepo-com.svg",
   CapCut: "/icons/capcut-svgrepo-com.svg",
   InDesign: "/icons/indesign-cc-logo-svgrepo-com.svg",
-} as const; // Use 'as const' for better type inference
+} as const;
 
-// Define which tools to show in each category using only available icons
+// Define which tools to show in each category
 const designTools: AvailableTool[] = [
   "Photoshop",
   "Illustrator",
@@ -48,34 +48,37 @@ const editingTools: AvailableTool[] = [
 
 export default function Tools() {
   return (
-    <section className="py-16 px-4">
-      <div className="max-w-3xl mx-auto space-y-10">
-        {/* Header */}
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
-          Skills & Tools
-        </h2>
+    <section className="py-12 md:py-16 px-4">
+      <div className="max-w-3xl mx-auto space-y-8 md:space-y-10">
+        {/* Simple Header */}
+        <div className="text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+            Tools & Skills
+          </h2>
+          <div className="w-16 h-0.5 bg-gray-300 dark:bg-gray-700 mx-auto mt-3" />
+        </div>
 
         {/* Design Tools */}
-        <div className="space-y-3">
-          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">
+        <div className="space-y-4">
+          <h3 className="text-base md:text-lg font-medium text-gray-700 dark:text-gray-300">
             Design Software
           </h3>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {designTools.map((tool) => (
               <Badge
                 key={tool}
                 variant="outline"
-                className="px-3 py-2 flex items-center justify-center group relative cursor-default hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="px-3 py-2 flex items-center justify-center group relative cursor-default hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-gray-200 dark:border-gray-700"
                 title={tool}
               >
                 <Image
                   src={availableIcons[tool]}
                   alt={tool}
-                  width={24}
-                  height={24}
-                  className="w-6 h-6"
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 md:w-8 md:h-8"
                 />
-                {/* Custom tooltip on hover */}
+                {/* Tooltip on hover */}
                 <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
                   {tool}
                 </span>
@@ -85,26 +88,26 @@ export default function Tools() {
         </div>
 
         {/* Editing Tools */}
-        <div className="space-y-3">
-          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">
-            Editing Software
+        <div className="space-y-4">
+          <h3 className="text-base md:text-lg font-medium text-gray-700 dark:text-gray-300">
+            Video Editing Software
           </h3>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {editingTools.map((tool) => (
               <Badge
                 key={tool}
                 variant="outline"
-                className="px-3 py-2 flex items-center justify-center group relative cursor-default hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="px-3 py-2 flex items-center justify-center group relative cursor-default hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-gray-200 dark:border-gray-700"
                 title={tool}
               >
                 <Image
                   src={availableIcons[tool]}
                   alt={tool}
-                  width={24}
-                  height={24}
-                  className="w-6 h-6"
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 md:w-8 md:h-8"
                 />
-                {/* Custom tooltip on hover */}
+                {/* Tooltip on hover */}
                 <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
                   {tool}
                 </span>
@@ -114,16 +117,22 @@ export default function Tools() {
         </div>
 
         {/* Languages */}
-        <div className="space-y-3">
-          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">
+        <div className="space-y-4">
+          <h3 className="text-base md:text-lg font-medium text-gray-700 dark:text-gray-300">
             Languages
           </h3>
-          <div className="flex flex-wrap gap-4">
-            <div className="text-sm flex items-center gap-1">
-              <span className="text-xl">🇬🇧</span> English (Professional)
+          <div className="flex flex-wrap gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full">
+              <span className="text-lg">🇬🇧</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                English (Professional)
+              </span>
             </div>
-            <div className="text-sm flex items-center gap-1">
-              <span className="text-xl">🇪🇹</span> Amharic (Native)
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full">
+              <span className="text-lg">🇪🇹</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                Amharic (Native)
+              </span>
             </div>
           </div>
         </div>
