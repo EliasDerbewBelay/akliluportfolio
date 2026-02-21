@@ -20,9 +20,10 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const navItems = ["Home", "Projects", "Certificates", "Contact Me"];
+  const navItems: string[] = ["Home", "Projects", "Certificates", "Contact Me"];
 
-  const getHref = (item) => {
+  // Fix: Add type annotation for the item parameter
+  const getHref = (item: string): string => {
     if (item === "Home") {
       return "/";
     }
@@ -52,7 +53,7 @@ export default function Navbar() {
             <ul
               className={`flex gap-8 ${josefin.className} text-gray-700 dark:text-gray-200 font-medium`}
             >
-              {navItems.map((item) => (
+              {navItems.map((item: string) => (
                 <li key={item} className="relative group">
                   <Link
                     href={getHref(item)}
@@ -105,7 +106,7 @@ export default function Navbar() {
           <ul
             className={`${josefin.className} text-gray-700 dark:text-gray-200 font-medium py-4 px-4`}
           >
-            {navItems.map((item, index) => (
+            {navItems.map((item: string, index: number) => (
               <li
                 key={item}
                 className={`transform transition-all duration-300 delay-${index * 75} ${
@@ -114,13 +115,13 @@ export default function Navbar() {
                     : "-translate-x-4 opacity-0"
                 }`}
               >
-                <a
+                <Link
                   href={getHref(item)}
                   className="block py-3 px-4 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
