@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Mail, MapPin, Phone, Download, MessageCircle } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -12,6 +13,17 @@ const josefin = Josefin_Sans({
 });
 
 export default function ProfilePage() {
+  // Function to handle CV download
+  const handleDownloadCV = () => {
+    // Create a link element
+    const link = document.createElement("a");
+    link.href = "/cv/aklilu-resume.pdf"; // Path to your CV file
+    link.download = "Aklilu_Derbew_Resume.pdf"; // Name for the downloaded file
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <main
       className={`${josefin.variable} font-josefin min-h-screen transition-colors duration-300`}
@@ -88,27 +100,35 @@ export default function ProfilePage() {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-              <Button
-                size="lg"
-                className="bg-blue-600 hover:bg-purple-600 text-white px-8 py-6 rounded-xl transition-all duration-300"
-              >
-                <span className="flex items-center gap-2">
-                  <MessageCircle className="w-5 h-5" />
-                  Get in Touch
-                </span>
-              </Button>
+              <Link href="/contact-me" className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-purple-600 text-white px-8 py-6 rounded-xl transition-all duration-300"
+                >
+                  <span className="flex items-center gap-2 justify-center">
+                    <MessageCircle className="w-5 h-5" />
+                    Get in Touch
+                  </span>
+                </Button>
+              </Link>
 
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-blue-600 dark:border-blue-400 text-blue-700 dark:text-blue-300 hover:bg-blue-600 hover:text-white dark:hover:text-white px-8 py-6 rounded-xl transition-all duration-300"
+                onClick={handleDownloadCV}
+                className="w-full sm:w-auto border-2 border-blue-600 dark:border-blue-400 text-blue-700 dark:text-blue-300 hover:bg-blue-600 hover:text-white dark:hover:text-white px-8 py-6 rounded-xl transition-all duration-300 cursor-pointer"
               >
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-2 justify-center">
                   <Download className="w-5 h-5" />
                   Download Resume
                 </span>
               </Button>
             </div>
+
+            {/* Optional: Add a small note about CV format */}
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-4">
+              Download my resume (PDF format)
+            </p>
           </div>
         </section>
       </div>
